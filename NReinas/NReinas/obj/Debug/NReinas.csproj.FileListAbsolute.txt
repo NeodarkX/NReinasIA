@@ -1,0 +1,13 @@
+C:\Users\Harold\Documents\Ciclo20152\Inteligencia Artificial\Trabajo2\NReinas\NReinas\bin\Debug\NReinas.exe.config
+C:\Users\Harold\Documents\Ciclo20152\Inteligencia Artificial\Trabajo2\NReinas\NReinas\bin\Debug\NReinas.exe
+C:\Users\Harold\Documents\Ciclo20152\Inteligencia Artificial\Trabajo2\NReinas\NReinas\bin\Debug\NReinas.pdb
+C:\Users\Harold\Documents\Ciclo20152\Inteligencia Artificial\Trabajo2\NReinas\NReinas\obj\Debug\NReinas.csprojResolveAssemblyReference.cache
+C:\Users\Harold\Documents\Ciclo20152\Inteligencia Artificial\Trabajo2\NReinas\NReinas\obj\Debug\MainWindow.baml
+C:\Users\Harold\Documents\Ciclo20152\Inteligencia Artificial\Trabajo2\NReinas\NReinas\obj\Debug\MainWindow.g.cs
+C:\Users\Harold\Documents\Ciclo20152\Inteligencia Artificial\Trabajo2\NReinas\NReinas\obj\Debug\App.g.cs
+C:\Users\Harold\Documents\Ciclo20152\Inteligencia Artificial\Trabajo2\NReinas\NReinas\obj\Debug\NReinas_MarkupCompile.cache
+C:\Users\Harold\Documents\Ciclo20152\Inteligencia Artificial\Trabajo2\NReinas\NReinas\obj\Debug\NReinas.g.resources
+C:\Users\Harold\Documents\Ciclo20152\Inteligencia Artificial\Trabajo2\NReinas\NReinas\obj\Debug\NReinas.Properties.Resources.resources
+C:\Users\Harold\Documents\Ciclo20152\Inteligencia Artificial\Trabajo2\NReinas\NReinas\obj\Debug\NReinas.csproj.GenerateResource.Cache
+C:\Users\Harold\Documents\Ciclo20152\Inteligencia Artificial\Trabajo2\NReinas\NReinas\obj\Debug\NReinas.exe
+C:\Users\Harold\Documents\Ciclo20152\Inteligencia Artificial\Trabajo2\NReinas\NReinas\obj\Debug\NReinas.pdb
