@@ -4,8 +4,8 @@
         Title="NReinas" WindowState="Maximized" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Auto"
-              VerticalScrollBarVisibility="Auto" Margin="0,0,205,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Canvas Background="#FFDCD7D7" Height="600" Width="556"/>
+              VerticalScrollBarVisibility="Auto" Margin="0,0,205,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="1000" Height="1000">
+            <Canvas Height="2000" Background="#FFDCD7D7"  Width="{Binding Parent.ActualWidth, Mode=OneWay, RelativeSource={RelativeSource Self}}"/>
         </ScrollViewer>
     </Grid>
 </Window>

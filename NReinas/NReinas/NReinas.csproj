@@ -95,8 +95,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controller\" />
-    <Folder Include="Resources\" />
     <Folder Include="UI\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\1436.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\tab1.png" />
+    <Resource Include="Resources\tab2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
