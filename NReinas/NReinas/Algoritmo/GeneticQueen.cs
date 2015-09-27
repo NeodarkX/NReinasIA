@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NReinas.Estructuras;
 
 namespace NReinas.Algoritmo
 {
     public class GeneticQueen
+
     {
         private Random rnd;
-        private int[] mejorTablero = null;
+        private Board mejorTablero = null;
 
 
         private int _probabilidadDeMutar;
@@ -23,29 +25,32 @@ namespace NReinas.Algoritmo
                 _probabilidadDeMutar = value;
             }
         }
+        public IGeneticQueen Listener;
 
-        public GeneticQueen()
+        public GeneticQueen(IGeneticQueen pListener)
         {
             ProbabilidadDeMutar = 100;
             rnd = new Random();
+            Listener = pListener;
         }
 
-        public void resolver(int N, IGeneticQueen listener)
+        public async Task<Board> Resolver(int N)
         {
-            int np = 20;
-            List<int[]> pob = new List<int[]>();
+            int np = 8;
+            List<Board> poblacion = new List<Board>();
             for (int i = 0; i < np; ++i)
-                pob.Add(aleatorio(N));
-            //mejorTablero = geneticAlg(pob, 0);
-            mejorTablero = algoritmoGenetico(pob, 0);
+                poblacion.Add(Board.GenerarAleatorio(N));
+            await Listener.MostrarPoblacion(poblacion);
+            mejorTablero = await AlgoritmoGenetico(poblacion, 0);
+            return mejorTablero;
         }
 
-        private int[] algoritmoGenetico(List<int[]> poblacion, int idoneo)
+        private async Task<Board> AlgoritmoGenetico(List<Board> poblacion, int idoneo)
         {
             int c = 0;
             while (true)
             {
-                List<int[]> nueva_poblacion = new List<int[]>(poblacion.Count);
+                List<Board> nueva_poblacion = new List<Board>(poblacion.Count);
                 for (int i = 0; i < poblacion.Count; i++)
                 {
                     //Escoger dos elementos de la poblacion al azar
@@ -55,46 +60,63 @@ namespace NReinas.Algoritmo
                     {
                         y = rnd.Next(poblacion.Count);
                     } while (y == x);
-                    int[] X = poblacion[x], Y = poblacion[y];
-                    //Reproducir los dos elementos escogidos
-                    int[] hijo = reproducir(X, Y);
+                    Board X = poblacion[x], Y = poblacion[y];
 
-                    if (rnd.Next(100) < ProbabilidadDeMutar)
-                        hijo = mutar(hijo);
+                    //Reproducir los dos elementos escogidos
+                    Board hijo = Reproducir(X, Y);
+                    await Listener.Reproduciendo(X, Y);
                     nueva_poblacion.Add(hijo);
-                    int fit = fitness(hijo);
+                    await Listener.AgregandoANuevaPoblacion(hijo);
+
+                    int fit = Fitness(hijo);
                     if (fit == 0)
                     {
                         Console.WriteLine("C: " + c);
                         foreach (int val in hijo)
                             Console.Write(val + " ");
+                        await Listener.Solucion(hijo);
                         return hijo;
                     }
-                    c++;
+
+                    //Es posible que se de una mutacion...
+                    if (rnd.Next(100) < ProbabilidadDeMutar)
+                    {
+                        Mutar(hijo);
+                        await Listener.Mutando(hijo);
+                    }
+
+                    fit = Fitness(hijo);
+                    if (fit == 0)
+                    {
+                        Console.WriteLine("C: " + c);
+                        foreach (int val in hijo)
+                            Console.Write(val + " ");
+                        await Listener.Solucion(hijo);
+                        return hijo;
+                    }
                 }
+                c++;
+                await Listener.TerminoNuevaPoblacion();
             }
         }
 
-        private int[] geneticAlg(List<int[]> poblacion, int idoneo)
+        private Board GeneticAlg(List<Board> poblacion, int idoneo)
         {
             int mejorH = idoneo + 100000;
-            int[] anterior = null;
-            int[] hijo = null;
+            Board anterior = null, hijo = null;
             int c = 0;
             do
             {
-                List<int[]> nuevaPoblacion = new List<int[]>();
+                List<Board> nuevaPoblacion = new List<Board>();
                 int i = 0;
-                foreach (int[] board in poblacion)
+                foreach (Board board in poblacion)
                 {
                     anterior = i++ > 0 ? board : poblacion.ElementAt(poblacion.Count - 1);
-                    hijo = reproducir(anterior, board);
+                    hijo = Reproducir(anterior, board);
                     if (rnd.Next(10) < 1)
-                    {
-                        hijo = mutar(hijo);
-                    }
+                        Mutar(hijo);
                     nuevaPoblacion.Add(hijo);
-                    mejorH = fitness(hijo);
+                    mejorH = Fitness(hijo);
                     if (mejorH == idoneo)
                     {
                         Console.WriteLine("C:" + c);
@@ -108,45 +130,42 @@ namespace NReinas.Algoritmo
             return mejorTablero;
         }
 
-        int fitness(int[] estado)
+        int Fitness(Board estado)
         {
             int c = 0;
-            for (int i = 0; i < estado.Length - 1; i++)
-                for (int j = i + 1; j < estado.Length; j++)
+            for (int i = 0; i < estado.Count - 1; i++)
+                for (int j = i + 1; j < estado.Count; j++)
                     if (estado[i] == estado[j] || estado[i] - (j - i) == estado[j] || estado[i] + (j - i) == estado[j])
                         c++;
             return c;
         }
 
-        private int[] reproducir(int[] X, int[] Y)
+        private Board Reproducir(Board X, Board Y)
         {
-            int[] hijo = new int[X.Length];
-            for (int i = 0; i < X.Length; i++)
+            int[] hijo = new int[X.Count];
+            for (int i = 0; i < X.Count; i++)
                 hijo[i] = (i % 2 == 0) ? X[i] : Y[i];
-            return hijo;
+            return new Board(hijo);
         }
 
-        private int[] mutar(int[] estado)
+        private void Mutar(Board estado)
         {
-            int cantidadMutaciones = rnd.Next() % ( estado.Length / 2) + 1;
+            int cantidadMutaciones = rnd.Next() % ( estado.Count / 2) + 1;
             for (int i = 0; i < cantidadMutaciones; i++)
-                estado[rnd.Next(estado.Length)  ] = rnd.Next(estado.Length);
-            return estado;
+                estado[rnd.Next(estado.Count)  ] = rnd.Next(estado.Count);
+            return;
         }
-
-        private int[] aleatorio(int n)
-        {
-            int[] board = new int[n];
-            for (int i = 0; i < board.Length; ++i)
-                board[i] = rnd.Next(0, n);
-            return board;
-        }
-
 
     }
 
     public interface IGeneticQueen
     {
+        Task MostrarPoblacion(List<Board> boards);
+        Task Reproduciendo(Board X, Board Y);
+        Task AgregandoANuevaPoblacion(Board hijo);
+        Task Mutando(Board hijo);
+        Task Solucion(Board solucion);
+        Task TerminoNuevaPoblacion();
     }
 
 }
