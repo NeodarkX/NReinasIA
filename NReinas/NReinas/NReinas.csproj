@@ -53,6 +53,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UI\BoardUI.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -96,12 +97,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UI\" />
+    <Resource Include="Resources\queen-black.png" />
+    <Resource Include="Resources\queen-white.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\1436.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Resources\chess.png" />
     <Resource Include="Resources\tab1.png" />
     <Resource Include="Resources\tab2.png" />
   </ItemGroup>
