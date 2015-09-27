@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using NReinas.Algoritmo;
 
 namespace NReinas
 {
@@ -23,6 +24,13 @@ namespace NReinas
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            GeneticQueen alg = new GeneticQueen();
+            alg.resolver(8, null);
         }
     }
 }
