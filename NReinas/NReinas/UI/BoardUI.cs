@@ -16,6 +16,9 @@ namespace NReinas.UI
         private Board mBoard;
         private List<Image> reinas;
         private double MARGIN = 2;
+        private static ImageBrush imageBrush = null;
+        private static BitmapImage ImageQueenWhite = new BitmapImage(new Uri(@"Resources\queen-white.png", UriKind.Relative));
+        private static BitmapImage ImageQueenBlack = new BitmapImage(new Uri(@"Resources\queen-black.png", UriKind.Relative));
 
         public BoardUI(Board pBoard) : this(pBoard,100) { } 
 
@@ -26,12 +29,15 @@ namespace NReinas.UI
                 throw new ArgumentNullException();
             mBoard = pBoard;
             //Seteando background
-            ImageBrush imageBrush = new ImageBrush();
-            BitmapImage bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = new Uri("pack://application:,,,/Resources/chess.jpg");
-            bitmap.EndInit();
-            imageBrush.ImageSource = bitmap;
+            if (imageBrush == null)
+            {
+                imageBrush = new ImageBrush();
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri("pack://application:,,,/Resources/chess.jpg");
+                bitmap.EndInit();
+                imageBrush.ImageSource = bitmap;
+            }
             Background = imageBrush;
 
 
@@ -43,10 +49,7 @@ namespace NReinas.UI
             for(int i = 0; i < n; i++)
             {
                 Image image = new Image();
-                if (mBoard[i] % 2 == 0) // esta en casilla negra, reina de blanco
-                    image.Source = new BitmapImage(new Uri(@"Resources\queen-white.png", UriKind.Relative));
-                else // esta en casilla blanca, reina de negro
-                    image.Source = new BitmapImage(new Uri(@"Resources\queen-black.png", UriKind.Relative));
+                image.Source = mBoard[i] % 2 == 0 ? ImageQueenWhite : ImageQueenBlack;
                 //setear tamanio
                 image.Width = image.Height = queenSize;
                 //setear coordenadas

@@ -29,7 +29,7 @@ namespace NReinas.Algoritmo
 
         public GeneticQueen(IGeneticQueen pListener)
         {
-            ProbabilidadDeMutar = 100;
+            ProbabilidadDeMutar = 80;
             rnd = new Random();
             Listener = pListener;
         }

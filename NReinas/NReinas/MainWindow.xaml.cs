@@ -26,19 +26,40 @@ namespace NReinas
         public MainWindow()
         {
             InitializeComponent();
+
+            for(int i = 0; i < 3; i++)
+            {
+                RowDefinition rd = new RowDefinition();
+                rd.Height = new GridLength(BOARD_SIZE);
+                Poblacion.RowDefinitions.Add(rd);
+            }
+            Poblacion.Height = BOARD_SIZE*3;
+
         }
+
+        int contNueva = 0;
+
+        private static TimeSpan delay = new TimeSpan(1);
 
         public async Task AgregandoANuevaPoblacion(Board hijo)
         {
+            /*
+            BoardUI boardUI = new BoardUI(hijo, BOARD_SIZE - BOARD_MARGIN * 2);
+            Grid.SetColumn(boardUI, contNueva++);
+            Grid.SetRow(boardUI, 1);
+            boardUI.Margin = new Thickness(BOARD_MARGIN);
+            Poblacion.Children.Add(boardUI);
+            await Task.Delay(1);
+            */
         }
 
         private int BOARD_SIZE = 70;
         private int BOARD_MARGIN = 4;
         public async Task MostrarPoblacion(List<Board> boards)
         {
+            
             int n = boards.Count;
             Poblacion.Width = BOARD_SIZE * n;
-            Poblacion.Height = BOARD_SIZE;
             int i = 0;
             foreach (Board board in boards)
             {
@@ -50,6 +71,8 @@ namespace NReinas
                 boardUI.Margin = new Thickness(BOARD_MARGIN);
                 Poblacion.Children.Add(boardUI);
             }
+            await Task.Delay(1);
+            
         }
 
         public async Task Mutando(Board hijo)
@@ -66,6 +89,18 @@ namespace NReinas
 
         public async Task TerminoNuevaPoblacion()
         {
+            /*
+            contNueva = 0;
+            int n = Poblacion.ColumnDefinitions.Count;
+            int temp = n * 2;
+            for (int i=temp;i<n;i--)
+            {
+                UIElement element = Poblacion.Children[i];
+                Poblacion.Children.Remove(element);
+            }
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            */
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
