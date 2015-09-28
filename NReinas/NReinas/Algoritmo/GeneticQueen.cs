@@ -36,7 +36,7 @@ namespace NReinas.Algoritmo
 
         public async Task<Board> Resolver(int N)
         {
-            int np = 8;
+            int np = 30;
             List<Board> poblacion = new List<Board>();
             for (int i = 0; i < np; ++i)
                 poblacion.Add(Board.GenerarAleatorio(N));

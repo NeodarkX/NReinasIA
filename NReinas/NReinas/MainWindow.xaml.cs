@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using NReinas.Algoritmo;
 using NReinas.Estructuras;
+using NReinas.UI;
 
 namespace NReinas
 {
@@ -31,13 +32,23 @@ namespace NReinas
         {
         }
 
+        private int BOARD_SIZE = 70;
+        private int BOARD_MARGIN = 4;
         public async Task MostrarPoblacion(List<Board> boards)
         {
-            foreach(Board board in boards)
+            int n = boards.Count;
+            Poblacion.Width = BOARD_SIZE * n;
+            Poblacion.Height = BOARD_SIZE;
+            int i = 0;
+            foreach (Board board in boards)
             {
-                foreach (int v in board)
-                    Console.Write(v + " ");
-                Console.WriteLine();
+                ColumnDefinition cd = new ColumnDefinition();
+                cd.Width = new GridLength(BOARD_SIZE);
+                Poblacion.ColumnDefinitions.Add(cd);
+                BoardUI boardUI = new BoardUI(board, BOARD_SIZE - BOARD_MARGIN * 2);
+                Grid.SetColumn(boardUI, i++);
+                boardUI.Margin = new Thickness(BOARD_MARGIN);
+                Poblacion.Children.Add(boardUI);
             }
         }
 
@@ -61,6 +72,7 @@ namespace NReinas
         {
 
             GeneticQueen alg = new GeneticQueen(this);
+
             await alg.Resolver(8);
         }
     }

@@ -97,13 +97,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\queen-black.png" />
-    <Resource Include="Resources\queen-white.png" />
+    <Resource Include="Resources\queen-black.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\queen-white.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\chess.png" />
     <Resource Include="Resources\tab1.png" />
     <Resource Include="Resources\tab2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\chess.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
