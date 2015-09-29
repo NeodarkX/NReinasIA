@@ -13,16 +13,16 @@ namespace NReinas.UI
 {
     public class BoardUI : Canvas
     {
-        private Board mBoard;
+        private int[] mBoard;
         private List<Image> reinas;
         private double MARGIN = 2;
         private static ImageBrush imageBrush = null;
         private static BitmapImage ImageQueenWhite = new BitmapImage(new Uri(@"Resources\queen-white.png", UriKind.Relative));
         private static BitmapImage ImageQueenBlack = new BitmapImage(new Uri(@"Resources\queen-black.png", UriKind.Relative));
 
-        public BoardUI(Board pBoard) : this(pBoard,100) { } 
+        public BoardUI(int[] pBoard) : this(pBoard,100) { } 
 
-        public BoardUI(Board pBoard,double size)
+        public BoardUI(int[] pBoard,double size)
         {
             Width = Height = size; 
             if (pBoard == null)
@@ -40,8 +40,7 @@ namespace NReinas.UI
             }
             Background = imageBrush;
 
-
-            int n = mBoard.Count;
+            int n = mBoard.Length;
             double columnSize = size / n;
             MARGIN = columnSize / 10;
             double queenSize = columnSize - MARGIN * 2;
@@ -61,13 +60,13 @@ namespace NReinas.UI
                 reinas.Add(image);
             }
 
-        }
+            }
 
-        public void Update(Board board)
+        public void Update(int[] board)
         {
             if (board == null)
                 throw new ArgumentNullException();
-            if (board.Count != mBoard.Count)
+            if (board.Length != mBoard.Length)
                 throw new ArgumentException("Los tamanios de los tableros deben concordar!");
 
             int i = 0;

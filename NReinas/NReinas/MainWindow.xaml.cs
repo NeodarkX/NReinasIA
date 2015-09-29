@@ -39,29 +39,32 @@ namespace NReinas
 
         int contNueva = 0;
 
-        private static TimeSpan delay = new TimeSpan(1);
+        private static TimeSpan delay = new TimeSpan(10);
 
-        public async Task AgregandoANuevaPoblacion(Board hijo)
+        private List<int[]> nuevaGeneracion;
+
+        public async Task AgregandoANuevaPoblacion(int[] hijo)
         {
-            /*
-            BoardUI boardUI = new BoardUI(hijo, BOARD_SIZE - BOARD_MARGIN * 2);
+            nuevaGeneracion.Add(hijo);
+
+            /*BoardUI boardUI = new BoardUI(hijo, BOARD_SIZE - BOARD_MARGIN * 2);
             Grid.SetColumn(boardUI, contNueva++);
             Grid.SetRow(boardUI, 1);
             boardUI.Margin = new Thickness(BOARD_MARGIN);
             Poblacion.Children.Add(boardUI);
-            await Task.Delay(1);
-            */
+            await Task.Delay(1);*/
+            
         }
 
         private int BOARD_SIZE = 70;
         private int BOARD_MARGIN = 4;
-        public async Task MostrarPoblacion(List<Board> boards)
+        public async Task MostrarPoblacion(List<int[]> boards)
         {
             
             int n = boards.Count;
             Poblacion.Width = BOARD_SIZE * n;
             int i = 0;
-            foreach (Board board in boards)
+            foreach (int[] board in boards)
             {
                 ColumnDefinition cd = new ColumnDefinition();
                 cd.Width = new GridLength(BOARD_SIZE);
@@ -72,35 +75,55 @@ namespace NReinas
                 Poblacion.Children.Add(boardUI);
             }
             await Task.Delay(1);
-            
+            nuevaGeneracion = new List<int[]>(boards.Count);
         }
 
-        public async Task Mutando(Board hijo)
+        public async Task Mutando(int[] hijo)
         {
         }
 
-        public async Task Reproduciendo(Board X, Board Y)
+        public async Task Reproduciendo(int[] X, int[] Y)
         {
         }
 
-        public async Task Solucion(Board solucion)
+        public async Task Solucion(int[] solucion)
         {
+            int i = 0;
+            foreach (int[] board in nuevaGeneracion)
+            {
+                BoardUI boardUI = new BoardUI(board, BOARD_SIZE - BOARD_MARGIN * 2);
+                Grid.SetColumn(boardUI, i++);
+                Grid.SetRow(boardUI, 1);
+                boardUI.Margin = new Thickness(BOARD_MARGIN);
+                Poblacion.Children.Add(boardUI);
+            }
+            await Task.Delay(1);
         }
+
+        int aux = 0;
 
         public async Task TerminoNuevaPoblacion()
         {
-            /*
+            int i = 0;
+            foreach (int[] board in nuevaGeneracion)
+            {
+                BoardUI boardUI = new BoardUI(board, BOARD_SIZE - BOARD_MARGIN * 2);
+                Grid.SetColumn(boardUI, i++);
+                Grid.SetRow(boardUI, 1);
+                boardUI.Margin = new Thickness(BOARD_MARGIN);
+                Poblacion.Children.Add(boardUI);
+            }
+            await Task.Delay(1);
+
             contNueva = 0;
             int n = Poblacion.ColumnDefinitions.Count;
             int temp = n * 2;
-            for (int i=temp;i<n;i--)
+            for (i = temp-1; i >= n; i--)
             {
                 UIElement element = Poblacion.Children[i];
                 Poblacion.Children.Remove(element);
             }
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            */
+            nuevaGeneracion.Clear();
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)

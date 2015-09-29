@@ -15,13 +15,7 @@ namespace NReinas.Estructuras
 
         public Board(int[] arr) : base(arr) {   }
 
-        public static Board GenerarAleatorio(int n)
-        {
-            Board newBoard = new Board(n);
-            for (int i = 0; i < n; ++i)
-                newBoard.Add(rnd.Next(n));
-            return newBoard;
-        }
+        
 
     }
 }
