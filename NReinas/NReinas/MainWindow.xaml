@@ -1,22 +1,92 @@
 ﻿<Window x:Class="NReinas.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-         Title="NReinas" WindowState="Maximized" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+         Title="NReinas" WindowState="Maximized" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" WindowStyle="None">
 
     <Grid>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" Background="Green"
+        <ScrollViewer HorizontalScrollBarVisibility="Auto"
               VerticalScrollBarVisibility="Auto">
-            <Grid Name="Poblacion" Background="Red" VerticalAlignment="Center" HorizontalAlignment="Center" Width="900">
-                
+            <Grid Name="Poblacion" Background="#2196F3" VerticalAlignment="Center" HorizontalAlignment="Center" Width="900" Visibility="Hidden">
+
             </Grid>
         </ScrollViewer>
-        
+
         <Canvas Name="CanvasPrincipal">
-            
+
         </Canvas>
 
+        <Rectangle Height="63" VerticalAlignment="Top" Fill="#1976D2" >
+            <Rectangle.Effect>
+                <DropShadowEffect Opacity="0.4" RenderingBias="Quality" BlurRadius="10" Direction="260" ShadowDepth="3"/>
+            </Rectangle.Effect>
+        </Rectangle>
+        <Label Content="Algoritmo Genético" HorizontalAlignment="Left" Margin="65,10,0,0" VerticalAlignment="Top" Height="42" Width="220" FontSize="24" Background="{x:Null}" Foreground="White"/>
+        <Border Background="#1976D2" BorderBrush="{x:Null}" BorderThickness="2"  Height="12" HorizontalAlignment="Left" Margin="0,51,0,0" Name="border2" VerticalAlignment="Top" Width="30">
+            <Border.BitmapEffect>
+                <OuterGlowBitmapEffect GlowColor="Green" GlowSize="10" Noise="0.7" Opacity="0.8" />
+            </Border.BitmapEffect>
+            <Border.Triggers>
+                <EventTrigger RoutedEvent="ToggleButton.Checked" SourceName="boton_activar2">
+                    <BeginStoryboard>
+                        <BeginStoryboard.Storyboard>
+                            <Storyboard >
+                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00.0" Duration="00:00:00.2000000" Storyboard.TargetProperty="Width">
+                                    <LinearDoubleKeyFrame KeyTime="00:00:00.2000000" Value="200" />
+                                    <LinearDoubleKeyFrame KeyTime="00:00:00.2400000" Value="280" />
+                                    <LinearDoubleKeyFrame KeyTime="00:00:00.3000000" Value="200" />
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00.2000000" Duration="00:00:00.3000000" Storyboard.TargetProperty="Height">
+                                    <LinearDoubleKeyFrame KeyTime="00:00:00.2000000" Value="300" />
+                                    <LinearDoubleKeyFrame KeyTime="00:00:00.2400000" Value="320" />
+                                    <LinearDoubleKeyFrame KeyTime="00:00:00.3000000" Value="300" />
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard.Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="ToggleButton.Unchecked" SourceName="boton_activar2">
+                    <BeginStoryboard >
+                        <BeginStoryboard.Storyboard>
+                            <Storyboard>
+                                <DoubleAnimationUsingKeyFrames Duration="00:00:00.2000000" Storyboard.TargetProperty="Height">
+                                    <LinearDoubleKeyFrame KeyTime="00:00:00.2000000" Value="12" />
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00.2000000" Duration="00:00:00.2000000" Storyboard.TargetProperty="Width">
+                                    <LinearDoubleKeyFrame KeyTime="00:00:00.2000000" Value="30" />
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard.Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Border.Triggers>
+            <Grid Margin="-2,6,8,0">
 
+                <ToggleButton Height="40" Name="boton_activar2" VerticalAlignment="Top" Width="42" Margin="10,-48,-32,0" HorizontalAlignment="Left" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                    <ToggleButton.Background>
+                        <ImageBrush Stretch="Uniform" ImageSource="Resources/menu.png"/>
+                    </ToggleButton.Background>
+
+
+                </ToggleButton>
+                <StackPanel Grid.Column="0" Margin="10,10,10,10">
+                    <Button Width="150" Background="{x:Null}"  BorderBrush="{x:Null}" Foreground="White" FontFamily="Segoe WP Light" FontSize="14" Click="Button_Click" Margin="0,0,0,10">Nuevo</Button>
+                    <Button x:Name="Reset" Width="150" Background="{x:Null}"  BorderBrush="{x:Null}" Foreground="White" FontFamily="Segoe WP Light" FontSize="14" Click="Reset_Click" Margin="0,0,0,10">Reiniciar</Button>
+                    <Button x:Name="Close" Width="150" Background="{x:Null}"  BorderBrush="{x:Null}" Foreground="White" FontFamily="Segoe WP Light" FontSize="14" Click="Button_Click_1" Margin="0,0,0,10" Content="Cerrar"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Label x:Name="TitleExecution" Content="Generacion Padre" Margin="259,81,221,403" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Height="51" Width="288"  Visibility="Hidden" Foreground="#FF727272"/>
+        <Button x:Name="GenShow" Content="Mostrar Generaciones" Margin="335,0,295,33" BorderBrush="{x:Null}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="138" Height="32" Background="#FF2196F3" Foreground="White" FontFamily="Segoe UI Semilight" Visibility="Hidden" Click="GenShow_Click">
+            <Button.Effect>
+                <DropShadowEffect Direction="272" Opacity="0.3"/>
+            </Button.Effect>
+        </Button>
+        <Slider x:Name="SliderGen" HorizontalAlignment="Center" Margin="0,0,0,30" VerticalAlignment="Bottom" Width="227" Foreground="{x:Null}" BorderBrush="{x:Null}" Background="{x:Null}" ValueChanged="SliderGen_ValueChanged" Visibility="Hidden"/>
+        <Grid x:Name="GridV" HorizontalAlignment="Center" Height="146" VerticalAlignment="Center" Width="212" Background="#1976D2" Visibility="Hidden">
+            <TextBox x:Name="TextBPop" HorizontalAlignment="Left" Height="23" Margin="55,95,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.14,0.565" PreviewKeyDown="TextBPop_PreviewKeyDown" BorderBrush="{x:Null}" SelectionBrush="#FF3F51B5"/>
+            <Label Content="Ingrese el tamaño:" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="16" Margin="38,31,35,0" Width="139" Height="35"/>
+        </Grid>
     </Grid>
 
-    
+
 </Window>

@@ -12,6 +12,8 @@ namespace NReinas.Algoritmo
     {
         private static Random rnd = new Random();
         private int[] mejorTablero = null;
+        List<List<int[]>> Generaciones;
+        private List<int[]> poblacionActual = null;
 
 
         private int _probabilidadDeMutar;
@@ -26,21 +28,28 @@ namespace NReinas.Algoritmo
             }
         }
         public IGeneticQueen Listener;
-
+        public int GeneracionesCount()
+        {
+            return Generaciones.Count;
+        }
         public GeneticQueen(IGeneticQueen pListener)
         {
+            Generaciones = new List<List<int[]>>();
             ProbabilidadDeMutar = 80;
             Listener = pListener;
         }
-
-        public async Task<int[]> Resolver(int N)
+        public async Task CreateFirstGen(int N,int size)
         {
-            int np = 20;
             List<int[]> poblacion = new List<int[]>();
-            for (int i = 0; i < np; ++i)
+            for (int i = 0; i < size; ++i)
                 poblacion.Add(GenerarAleatorio(N));
+            poblacionActual = poblacion;
+            Generaciones.Add(poblacion);
             await Listener.MostrarPoblacion(poblacion);
-            mejorTablero = await AlgoritmoGenetico(poblacion, 0);
+        }
+        public async Task<int[]> Resolver()
+        {           
+            mejorTablero = await AlgoritmoGenetico(poblacionActual, 0);
             return mejorTablero;
         }
 
@@ -63,9 +72,9 @@ namespace NReinas.Algoritmo
 
                     //Reproducir los dos elementos escogidos
                     int[] hijo = Reproducir(X, Y);
-                    await Listener.Reproduciendo(X, Y);
+                    //await Listener.Reproduciendo(X, Y);
                     nueva_poblacion.Add(hijo);
-                    await Listener.AgregandoANuevaPoblacion(hijo);
+                    //await Listener.AgregandoANuevaPoblacion(hijo);
 
                     int fit = Fitness(hijo);
                     if (fit == 0)
@@ -73,7 +82,7 @@ namespace NReinas.Algoritmo
                         Console.WriteLine("C: " + c);
                         foreach (int val in hijo)
                             Console.Write(val + " ");
-                        await Listener.Solucion(hijo);
+                        //await Listener.Solucion(hijo);
                         return hijo;
                     }
 
@@ -81,7 +90,7 @@ namespace NReinas.Algoritmo
                     if (rnd.Next(100) < ProbabilidadDeMutar)
                     {
                         Mutar(hijo);
-                        await Listener.Mutando(hijo);
+                        //await Listener.Mutando(hijo);
                     }
                     fit = Fitness(hijo);
                     if (fit == 0)
@@ -89,12 +98,13 @@ namespace NReinas.Algoritmo
                         Console.WriteLine("C: " + c);
                         foreach (int val in hijo)
                             Console.Write(val + " ");
-                        await Listener.Solucion(hijo);
+                        //await Listener.Solucion(hijo);
                         return hijo;
                     }
                 }
                 c++;
-                await Listener.TerminoNuevaPoblacion();
+                Generaciones.Add(nueva_poblacion);
+                //await Listener.TerminoNuevaPoblacion();
             }
         }
 
@@ -161,6 +171,11 @@ namespace NReinas.Algoritmo
                 estado[rnd.Next(estado.Length)  ] = rnd.Next(estado.Length);
             return;
         }
+        public List<int[]> ReturnGenByIndex(int ind)
+        {
+            return Generaciones[ind];
+        }
+
 
     }
 
@@ -171,7 +186,7 @@ namespace NReinas.Algoritmo
         Task AgregandoANuevaPoblacion(int[] hijo);
         Task Mutando(int[] hijo);
         Task Solucion(int[] solucion);
-        Task TerminoNuevaPoblacion();
+        Task TerminoNuevaPoblacion(List<int[]> nuevaGeneracion);
     }
 
 }

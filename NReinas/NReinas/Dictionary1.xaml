@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="SliderSelectionBackground" Color="Blue" />
+    <SolidColorBrush x:Key="SliderSelectionBorder" Color="Blue" />
+    <SolidColorBrush x:Key="SliderThumbBackground" Color="Blue" />
+    <SolidColorBrush x:Key="SliderThumbBackgroundDisabled" Color="Blue" />
+    <SolidColorBrush x:Key="SliderThumbBackgroundDragging" Color="Blue" />
+    <SolidColorBrush x:Key="SliderThumbBackgroundHover" Color="Blue" />
+    <SolidColorBrush x:Key="SliderThumbBorder" Color="Blue" />
+    <SolidColorBrush x:Key="SliderThumbBorderDisabled" Color="Blue" />
+    <SolidColorBrush x:Key="SliderThumbBorderDragging" Color="Blue" />
+    <SolidColorBrush x:Key="SliderThumbBorderHover" Color="Blue" />
+
+</ResourceDictionary>
