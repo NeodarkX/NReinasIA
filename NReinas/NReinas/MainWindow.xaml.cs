@@ -21,7 +21,7 @@ namespace NReinas
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window,IGeneticQueen
+    public partial class MainWindow : Window,IGeneticQueen,IBoardUI
     {
         GeneticQueen alg;
         int n = 0;
@@ -35,17 +35,17 @@ namespace NReinas
             InitializeComponent();
         }
         
-        public async Task AgregandoANuevaPoblacion(int[] hijo)
+        public async Task AgregandoANuevaPoblacion(Board hijo)
         {
         }
         
-        public async Task MostrarPoblacion(List<int[]> boards)
+        public async Task MostrarPoblacion(List<Board> boards)
         {            
             int n = boards.Count;
             int i = 0;
-            foreach (int[] board in boards)
+            foreach (Board board in boards)
             {
-                BoardUI boardUI = new BoardUI(board, BOARD_SIZE - BOARD_MARGIN * 2);
+                BoardUI boardUI = new BoardUI(board, BOARD_SIZE - BOARD_MARGIN * 2,this);
                 Grid.SetColumn(boardUI, (i % MaxColumns));
                 Grid.SetRow(boardUI, i++ / MaxColumns);
                 boardUI.Margin = new Thickness(BOARD_MARGIN);
@@ -54,35 +54,36 @@ namespace NReinas
             await Task.Delay(1);
         }
 
-        public async Task Mutando(int[] hijo)
+        public async Task Mutando(Board hijo)
         {
         }
 
-        public async Task Reproduciendo(int[] X, int[] Y)
+        public async Task Reproduciendo(Board X, Board Y)
         {
         }
 
-        public async Task Solucion(int[] solucion)
+        public async Task Solucion(Board solucion)
         {
             int i = 0;
-            BoardUI boardUI = new BoardUI(solucion, BOARD_SIZE - BOARD_MARGIN * 2);
+            BoardUI boardUI = new BoardUI(solucion, BOARD_SIZE - BOARD_MARGIN * 2,this);
             boardUI.Margin = new Thickness(BOARD_MARGIN);
             SolucionArea.Children.Clear();
             SolucionArea.Children.Add(boardUI);
+            MostrarDetalles(solucion);
             await Task.Delay(1);
         }
 
         int aux = 0;
 
-        public async Task TerminoNuevaPoblacion(List<int[]> nuevaGeneracion)
+        public async Task TerminoNuevaPoblacion(List<Board> nuevaGeneracion)
         {
             int i = 0;
             //int n = Poblacion.ColumnDefinitions.Count;
             //Poblacion.Children.RemoveRange(0, n);
             Poblacion.Children.Clear();
-            foreach (int[] board in nuevaGeneracion)
+            foreach (Board board in nuevaGeneracion)
             {
-                BoardUI boardUI = new BoardUI(board, BOARD_SIZE - BOARD_MARGIN * 2);
+                BoardUI boardUI = new BoardUI(board, BOARD_SIZE - BOARD_MARGIN * 2,this);
                 Grid.SetColumn(boardUI, (i % MaxColumns));
                 Grid.SetRow(boardUI, i++ / MaxColumns);
                 boardUI.Margin = new Thickness(BOARD_MARGIN);
@@ -121,6 +122,7 @@ namespace NReinas
                         //Creo la primera generacion de 8x8 y tamaño de muestra n
                         await alg.CreateFirstGen(8,n);
                         //Escondo y muestro herramientas
+                        TitleExecution.Content = "Generación padre";
                         TitleExecution.Visibility = Visibility.Visible;
                         GenShow.Visibility = Visibility.Visible;
                         Poblacion.Visibility = Visibility.Visible;
@@ -156,6 +158,8 @@ namespace NReinas
             //Reinicio y escondo
             GenShow.Visibility = Visibility.Hidden;
             SliderGen.Visibility = Visibility.Visible;
+
+            await TerminoNuevaPoblacion(alg.ReturnGenByIndex(0));
         }
 
 
@@ -219,5 +223,49 @@ namespace NReinas
             }
             Poblacion.Height = Rows * BOARD_SIZE;
         }
+
+        public void BoardClicked(Board board)
+        {
+            MostrarDetalles(board);
+        }
+
+        private void MostrarDetalles(Board board)
+        {
+            if (board != null)
+            {
+                if (board.Padre != null && board.Madre!=null)
+                {
+                    PadreArea.Children.Clear();
+                    MadreArea.Children.Clear();
+
+                    BoardUI padre = new BoardUI(board.Padre, BOARD_SIZE / 2 - BOARD_MARGIN, this);
+                    BoardUI madre = new BoardUI(board.Madre, BOARD_SIZE / 2 - BOARD_MARGIN, this);
+                    Grid.SetRow(padre, 1);      Grid.SetRow(madre, 1);
+                    Grid.SetColumn(padre, 0);   Grid.SetColumn(madre, 2);
+
+                    PadreArea.Children.Add(padre);
+                    MadreArea.Children.Add(madre);
+                }
+
+                AntesArea.Children.Clear();
+                ActualArea.Children.Clear();
+                if (board.AntesDeMutar == null)
+                { //No muto
+                    Muto.Content = "No mutó";
+                    FlechaMuto.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    Muto.Content = "Sí mutó";
+                    FlechaMuto.Visibility = Visibility.Visible;
+                    BoardUI antes = new BoardUI(board.AntesDeMutar, BOARD_SIZE / 2 - BOARD_MARGIN, this);
+                    BoardUI actual = new BoardUI(board, BOARD_SIZE / 2 - BOARD_MARGIN, this);
+                    AntesArea.Children.Add(antes);
+                    ActualArea.Children.Add(actual);
+                }
+
+            }
+        }
+
     }
 }

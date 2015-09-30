@@ -13,16 +13,18 @@ namespace NReinas.UI
 {
     public class BoardUI : Canvas
     {
-        private int[] mBoard;
+        private Board mBoard;
         private List<Image> reinas;
         private double MARGIN = 2;
         private static ImageBrush imageBrush = null;
         private static BitmapImage ImageQueenWhite = new BitmapImage(new Uri(@"Resources\queen-white.png", UriKind.Relative));
         private static BitmapImage ImageQueenBlack = new BitmapImage(new Uri(@"Resources\queen-black.png", UriKind.Relative));
+        private IBoardUI Listener;
 
-        public BoardUI(int[] pBoard) : this(pBoard,100) { } 
+        
+        public BoardUI(Board pBoard, IBoardUI listener) : this(pBoard,100,listener) { } 
 
-        public BoardUI(int[] pBoard,double size)
+        public BoardUI(Board pBoard,double size, IBoardUI listener)
         {
             Width = Height = size; 
             if (pBoard == null)
@@ -40,7 +42,7 @@ namespace NReinas.UI
             }
             Background = imageBrush;
 
-            int n = mBoard.Length;
+            int n = mBoard.Count;
             double columnSize = size / n;
             MARGIN = columnSize / 10;
             double queenSize = columnSize - MARGIN * 2;
@@ -63,13 +65,20 @@ namespace NReinas.UI
                 reinas.Add(image);
             }
 
-            }
+            Listener = listener;
+            MouseDown += (o, e) =>
+            {
+                if (Listener != null)
+                    Listener.BoardClicked(mBoard);
+            };
+
+        }
 
         public void Update(int[] board)
         {
             if (board == null)
                 throw new ArgumentNullException();
-            if (board.Length != mBoard.Length)
+            if (board.Length != mBoard.Count)
                 throw new ArgumentException("Los tamanios de los tableros deben concordar!");
 
             int i = 0;
@@ -90,4 +99,10 @@ namespace NReinas.UI
         }
 
     }
+
+    public interface IBoardUI
+    {
+        void BoardClicked(Board board);
+    }
+
 }

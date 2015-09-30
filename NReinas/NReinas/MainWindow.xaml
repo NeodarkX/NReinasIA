@@ -13,18 +13,48 @@
             <ScrollViewer HorizontalScrollBarVisibility="Auto" Name="Scroll" Grid.Row="1"
               VerticalScrollBarVisibility="Auto" Margin="10,10">
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                    <Label x:Name="TitleExecution" Content="Generacion Padre" Margin="0,20" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Foreground="#FF727272"/>
+                    <Label x:Name="TitleExecution" Content="N-Reinas" Margin="0,20" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Foreground="#FF727272"/>
                     <Grid Name="Poblacion" Background="#2196F3" VerticalAlignment="Center" Height="300" Visibility="Hidden" Margin="10,0" />
                 </StackPanel>
             </ScrollViewer>
 
-            <StackPanel Grid.Column="1" Width="300" Visibility="Collapsed" Name="BarraLateral">
+            <StackPanel Grid.Column="1" Width="350" Visibility="Collapsed" Name="BarraLateral">
                 <Label Content="Solución" Margin="0,20" FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Foreground="#FF727272"/>
                 <StackPanel HorizontalAlignment="Center" Name="SolucionArea" />
 
                 <Label Content="Detalles" Margin="0,20,0,0" FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Foreground="#FF727272"/>
                 <Label Content="Selecciona un tablero para ver sus detalles "  FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Foreground="#FF727272"/>
 
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Label Content="Padre" Grid.Column="0"  FontSize="10" HorizontalAlignment="Center" Foreground="#FF727272"/>
+                    <Label Content="Madre" Grid.Column="2"  FontSize="10" HorizontalAlignment="Center" Foreground="#FF727272"/>
+
+                    <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Name="PadreArea" />
+                    <StackPanel Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Name="MadreArea" />
+
+                    <Label Content="No mutó" Name="Muto"  Grid.Row="2" Grid.ColumnSpan="3"  FontSize="10" HorizontalAlignment="Center" Foreground="#FF727272"/>
+
+                    <Viewbox Width="48" Height="20" Name="FlechaMuto" Grid.Row="3" Grid.Column="1" Visibility="Hidden">
+                        <Canvas Width="24" Height="24">
+                            <Path Data="M4,10V14H13L9.5,17.5L11.92,19.92L19.84,12L11.92,4.08L9.5,6.5L13,10H4Z" Fill="Black" />
+                        </Canvas>
+                    </Viewbox>
+                    <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,10" HorizontalAlignment="Center" Name="AntesArea" />
+                    <StackPanel Grid.Row="3" Grid.Column="2" Margin="0,10" HorizontalAlignment="Center" Name="ActualArea" />
+
+                </Grid>
                 
                 
             </StackPanel>

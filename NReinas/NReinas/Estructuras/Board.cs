@@ -15,7 +15,15 @@ namespace NReinas.Estructuras
 
         public Board(int[] arr) : base(arr) {   }
 
-        
+        public Board(int[] arr,Board padre, Board madre) : base(arr)
+        {
+            Madre = madre;
+            Padre = padre;
+        }
+
+        public Board Padre { get; }
+        public Board Madre { get; }
+        public Board AntesDeMutar { get; set; }
 
     }
 }
