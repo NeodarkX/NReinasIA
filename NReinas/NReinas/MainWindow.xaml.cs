@@ -58,7 +58,7 @@ namespace NReinas
             await Task.Delay(1);*/
             
         }
-
+        //Reajuste este tamaño para que se vean mas generaciones
         private int BOARD_SIZE = 200;
         private int BOARD_MARGIN = 4;
         
@@ -130,6 +130,7 @@ namespace NReinas
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            // Es es el boton de nuevo escondo y muestro el mensaje
             TextBPop.Visibility = Visibility.Visible;
             GridV.Visibility = Visibility.Visible;
             
@@ -144,9 +145,12 @@ namespace NReinas
                     n = Int32.Parse(TextBPop.Text);
                     if (n >= 0)//No permite negativos
                     {                        
+                        // Escondo el anuncio
                         GridV.Visibility = Visibility.Hidden;
                         alg = new GeneticQueen(this);
+                        //Creo la primera generacion de 8x8 y tamaño de muestra n
                         await alg.CreateFirstGen(8,n);
+                        //Escondo y muestro herramientas
                         TitleExecution.Visibility = Visibility.Visible;
                         GenShow.Visibility = Visibility.Visible;
                         Poblacion.Visibility = Visibility.Visible;
@@ -163,16 +167,20 @@ namespace NReinas
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            //Para cerrar la ventana
             this.Close();
         }
 
         private async void GenShow_Click(object sender, RoutedEventArgs e)
         {
-
+            //Al mostrar la genereacion limpio la poblacion 
             Poblacion.Children.Clear();
+            //Resolver...
             await alg.Resolver();
+            //Inicio el slider en su minimum and maximum
             SliderGen.Minimum = 0;
             SliderGen.Maximum = alg.GeneracionesCount()-1;
+            //Reinicio y escondo
             GenShow.Visibility = Visibility.Hidden;
             SliderGen.Visibility = Visibility.Visible;
         }
@@ -181,24 +189,32 @@ namespace NReinas
 
         private async void SliderGen_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            // al obtener el valor cambio durande el movimiento del slider lo convierto a entero
             int nvalue = Convert.ToInt32(e.NewValue);
+            //lo busco dentro de la lista Generacion que contiene todas las generaciones
             await TerminoNuevaPoblacion(alg.ReturnGenByIndex(nvalue));
+            //Cambio el titulo de cada generacion con el valor a string
             TitleExecution.Content = "Generacion " + Convert.ToString(nvalue);
         }
 
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
+            //limpio el objeto alg aunque creo que se necesita algo mas para limpiar :v
             alg = null;
+            //El titulo lo reinicio al gen padre
             TitleExecution.Content = "Generacion Padre";
+            // limpio la poblacion que se quedo en la anterior muestra
             Poblacion.Children.Clear();
+            //Este codigo es de otra funcion es para reajustar el tamaño del grif o algo asi :v
             for (int i = 0; i < 3; i++)
             {
                 RowDefinition rd = new RowDefinition();
                 rd.Height = new GridLength(BOARD_SIZE);
                 Poblacion.RowDefinitions.Add(rd);
             }
+            //oli boli :v
             Poblacion.Height = BOARD_SIZE;
-            
+            //Al reiniciar esconde los textos, botones, slider etc...
             TitleExecution.Visibility = Visibility.Hidden;
             GenShow.Visibility = Visibility.Hidden;
             SliderGen.Visibility = Visibility.Hidden;

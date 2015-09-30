@@ -34,6 +34,7 @@ namespace NReinas.Algoritmo
         }
         public GeneticQueen(IGeneticQueen pListener)
         {
+            //Inicio la lista de generaciones aqui
             Generaciones = new List<List<int[]>>();
             ProbabilidadDeMutar = 80;
             Listener = pListener;
@@ -103,6 +104,7 @@ namespace NReinas.Algoritmo
                     }
                 }
                 c++;
+                //Aqui agrego la nueva generacion
                 Generaciones.Add(nueva_poblacion);
                 //await Listener.TerminoNuevaPoblacion();
             }
@@ -173,6 +175,7 @@ namespace NReinas.Algoritmo
         }
         public List<int[]> ReturnGenByIndex(int ind)
         {
+            //Retorno la lista de generacion pedida durante el slider
             return Generaciones[ind];
         }
 
