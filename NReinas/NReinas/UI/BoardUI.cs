@@ -48,7 +48,10 @@ namespace NReinas.UI
             for(int i = 0; i < n; i++)
             {
                 Image image = new Image();
-                image.Source = mBoard[i] % 2 == 0 ? ImageQueenWhite : ImageQueenBlack;
+                if(i%2==1)
+                    image.Source = mBoard[i] % 2 == 0 ? ImageQueenWhite : ImageQueenBlack;
+                else
+                    image.Source = mBoard[i] % 2 == 0 ? ImageQueenBlack : ImageQueenWhite;
                 //setear tamanio
                 image.Width = image.Height = queenSize;
                 //setear coordenadas

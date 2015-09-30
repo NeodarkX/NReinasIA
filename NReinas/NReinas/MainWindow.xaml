@@ -3,19 +3,35 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          Title="NReinas" WindowState="Maximized" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" WindowStyle="None">
 
-    <Grid>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto"
-              VerticalScrollBarVisibility="Auto">
-            <Grid Name="Poblacion" Background="#2196F3" VerticalAlignment="Center" HorizontalAlignment="Center" Width="900" Visibility="Hidden">
+    <Grid Name="MainContainer">
 
-            </Grid>
-        </ScrollViewer>
+        <Grid Margin="0,73">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" Name="Scroll" Grid.Row="1"
+              VerticalScrollBarVisibility="Auto" Margin="10,10">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                    <Label x:Name="TitleExecution" Content="Generacion Padre" Margin="0,20" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Foreground="#FF727272"/>
+                    <Grid Name="Poblacion" Background="#2196F3" VerticalAlignment="Center" Height="300" Visibility="Hidden" Margin="10,0" />
+                </StackPanel>
+            </ScrollViewer>
 
-        <Canvas Name="CanvasPrincipal">
+            <StackPanel Grid.Column="1" Width="300" Visibility="Collapsed" Name="BarraLateral">
+                <Label Content="Solución" Margin="0,20" FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Foreground="#FF727272"/>
+                <StackPanel HorizontalAlignment="Center" Name="SolucionArea" />
 
-        </Canvas>
+                <Label Content="Detalles" Margin="0,20,0,0" FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Foreground="#FF727272"/>
+                <Label Content="Selecciona un tablero para ver sus detalles "  FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Foreground="#FF727272"/>
 
-        <Rectangle Height="63" VerticalAlignment="Top" Fill="#1976D2" >
+                
+                
+            </StackPanel>
+            
+        </Grid>
+
+        <Rectangle Height="63" VerticalAlignment="Top" Fill="#1976D2" Grid.ColumnSpan="2">
             <Rectangle.Effect>
                 <DropShadowEffect Opacity="0.4" RenderingBias="Quality" BlurRadius="10" Direction="260" ShadowDepth="3"/>
             </Rectangle.Effect>
@@ -75,13 +91,15 @@
                 </StackPanel>
             </Grid>
         </Border>
-        <Label x:Name="TitleExecution" Content="Generacion Padre" Margin="259,81,221,403" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Height="51" Width="288"  Visibility="Hidden" Foreground="#FF727272"/>
+
+       
+        
         <Button x:Name="GenShow" Content="Mostrar Generaciones" Margin="335,0,295,33" BorderBrush="{x:Null}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="138" Height="32" Background="#FF2196F3" Foreground="White" FontFamily="Segoe UI Semilight" Visibility="Hidden" Click="GenShow_Click">
             <Button.Effect>
                 <DropShadowEffect Direction="272" Opacity="0.3"/>
             </Button.Effect>
         </Button>
-        <Slider x:Name="SliderGen" HorizontalAlignment="Center" Margin="0,0,0,30" VerticalAlignment="Bottom" Width="227" Foreground="{x:Null}" BorderBrush="{x:Null}" Background="{x:Null}" ValueChanged="SliderGen_ValueChanged" Visibility="Hidden"/>
+        <Slider x:Name="SliderGen" HorizontalAlignment="Center" Margin="0,0,0,30" VerticalAlignment="Bottom" Width="500" Foreground="{x:Null}" BorderBrush="{x:Null}" Background="{x:Null}" ValueChanged="SliderGen_ValueChanged" Visibility="Hidden"/>
         <Grid x:Name="GridV" HorizontalAlignment="Center" Height="146" VerticalAlignment="Center" Width="212" Background="#1976D2" Visibility="Hidden">
             <TextBox x:Name="TextBPop" HorizontalAlignment="Left" Height="23" Margin="55,95,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.14,0.565" PreviewKeyDown="TextBPop_PreviewKeyDown" BorderBrush="{x:Null}" SelectionBrush="#FF3F51B5"/>
             <Label Content="Ingrese el tamaño:" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="16" Margin="38,31,35,0" Width="139" Height="35"/>

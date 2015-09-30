@@ -25,60 +25,33 @@ namespace NReinas
     {
         GeneticQueen alg;
         int n = 0;
-        
+        //Reajuste este tamaño para que se vean mas generaciones
+        private double BOARD_SIZE = 150;
+        private double BOARD_MARGIN = 4;
+        private int MaxColumns,Rows;
+
         public MainWindow()
         {
             InitializeComponent();
-
-            for(int i = 0; i < 3; i++)
-            {
-                RowDefinition rd = new RowDefinition();
-                rd.Height = new GridLength(BOARD_SIZE);
-                Poblacion.RowDefinitions.Add(rd);
-            }
-            Poblacion.Height = BOARD_SIZE;
-
         }
-
-        int contNueva = 0;
-
-        private static TimeSpan delay = new TimeSpan(10);
-
-        //private List<int[]> nuevaGeneracion;
-
+        
         public async Task AgregandoANuevaPoblacion(int[] hijo)
         {
-            //nuevaGeneracion.Add(hijo);
-
-            /*BoardUI boardUI = new BoardUI(hijo, BOARD_SIZE - BOARD_MARGIN * 2);
-            Grid.SetColumn(boardUI, contNueva++);
-            Grid.SetRow(boardUI, 1);
-            boardUI.Margin = new Thickness(BOARD_MARGIN);
-            Poblacion.Children.Add(boardUI);
-            await Task.Delay(1);*/
-            
         }
-        //Reajuste este tamaño para que se vean mas generaciones
-        private int BOARD_SIZE = 200;
-        private int BOARD_MARGIN = 4;
         
         public async Task MostrarPoblacion(List<int[]> boards)
         {            
             int n = boards.Count;
-            Poblacion.Width = BOARD_SIZE * n;
             int i = 0;
             foreach (int[] board in boards)
             {
-                ColumnDefinition cd = new ColumnDefinition();
-                cd.Width = new GridLength(BOARD_SIZE);
-                Poblacion.ColumnDefinitions.Add(cd);
                 BoardUI boardUI = new BoardUI(board, BOARD_SIZE - BOARD_MARGIN * 2);
-                Grid.SetColumn(boardUI, i++);
+                Grid.SetColumn(boardUI, (i % MaxColumns));
+                Grid.SetRow(boardUI, i++ / MaxColumns);
                 boardUI.Margin = new Thickness(BOARD_MARGIN);
                 Poblacion.Children.Add(boardUI);
             }
             await Task.Delay(1);
-            //nuevaGeneracion = new List<int[]>(boards.Count);
         }
 
         public async Task Mutando(int[] hijo)
@@ -92,14 +65,10 @@ namespace NReinas
         public async Task Solucion(int[] solucion)
         {
             int i = 0;
-            /*foreach (int[] board in nuevaGeneracion)
-            {
-                BoardUI boardUI = new BoardUI(board, BOARD_SIZE - BOARD_MARGIN * 2);
-                Grid.SetColumn(boardUI, i++);
-                Grid.SetRow(boardUI, 1);
-                boardUI.Margin = new Thickness(BOARD_MARGIN);
-                Poblacion.Children.Add(boardUI);
-            }*/
+            BoardUI boardUI = new BoardUI(solucion, BOARD_SIZE - BOARD_MARGIN * 2);
+            boardUI.Margin = new Thickness(BOARD_MARGIN);
+            SolucionArea.Children.Clear();
+            SolucionArea.Children.Add(boardUI);
             await Task.Delay(1);
         }
 
@@ -108,19 +77,18 @@ namespace NReinas
         public async Task TerminoNuevaPoblacion(List<int[]> nuevaGeneracion)
         {
             int i = 0;
-            int n = Poblacion.ColumnDefinitions.Count;
-            Poblacion.Children.RemoveRange(0, n);
+            //int n = Poblacion.ColumnDefinitions.Count;
+            //Poblacion.Children.RemoveRange(0, n);
+            Poblacion.Children.Clear();
             foreach (int[] board in nuevaGeneracion)
             {
                 BoardUI boardUI = new BoardUI(board, BOARD_SIZE - BOARD_MARGIN * 2);
-                Grid.SetColumn(boardUI, i++);
+                Grid.SetColumn(boardUI, (i % MaxColumns));
+                Grid.SetRow(boardUI, i++ / MaxColumns);
                 boardUI.Margin = new Thickness(BOARD_MARGIN);
                 Poblacion.Children.Add(boardUI);
             }
             await Task.Delay(1);
-
-            contNueva = 0;
-          
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
@@ -144,7 +112,9 @@ namespace NReinas
                 {
                     n = Int32.Parse(TextBPop.Text);
                     if (n >= 0)//No permite negativos
-                    {                        
+                    {
+                        //Setea los valores iniciales de la grilla
+                        initGrid();
                         // Escondo el anuncio
                         GridV.Visibility = Visibility.Hidden;
                         alg = new GeneticQueen(this);
@@ -175,6 +145,9 @@ namespace NReinas
         {
             //Al mostrar la genereacion limpio la poblacion 
             Poblacion.Children.Clear();
+            //Muestro la barra lateral
+            BarraLateral.Visibility = Visibility.Visible;
+            initGrid();
             //Resolver...
             await alg.Resolver();
             //Inicio el slider en su minimum and maximum
@@ -206,7 +179,8 @@ namespace NReinas
             // limpio la poblacion que se quedo en la anterior muestra
             Poblacion.Children.Clear();
             //Este codigo es de otra funcion es para reajustar el tamaño del grif o algo asi :v
-            for (int i = 0; i < 3; i++)
+            Poblacion.RowDefinitions.Clear();
+            for (int i = 0; i < Rows; i++)
             {
                 RowDefinition rd = new RowDefinition();
                 rd.Height = new GridLength(BOARD_SIZE);
@@ -219,7 +193,31 @@ namespace NReinas
             GenShow.Visibility = Visibility.Hidden;
             SliderGen.Visibility = Visibility.Hidden;
             Poblacion.Visibility = Visibility.Hidden;
+            BarraLateral.Visibility = Visibility.Collapsed;
+        }
 
+        private void initGrid()
+        {
+            //Calculo max columnas
+            MaxColumns = (int)((Scroll.ActualWidth - BarraLateral.ActualWidth) / BOARD_SIZE);
+            Poblacion.ColumnDefinitions.Clear();
+            for (int i = 0; i < MaxColumns; i++)
+            {
+                ColumnDefinition cd = new ColumnDefinition();
+                cd.Width = new GridLength(BOARD_SIZE);
+                Poblacion.ColumnDefinitions.Add(cd);
+            }
+                Poblacion.Width = Math.Min(n,MaxColumns) * BOARD_SIZE;
+            //Calculo numero de filas
+            Rows = (n / MaxColumns) + 1;
+            Poblacion.RowDefinitions.Clear();
+            for (int i = 0; i < Rows; i++)
+            {
+                RowDefinition rd = new RowDefinition();
+                rd.Height = new GridLength(BOARD_SIZE);
+                Poblacion.RowDefinitions.Add(rd);
+            }
+            Poblacion.Height = Rows * BOARD_SIZE;
         }
     }
 }

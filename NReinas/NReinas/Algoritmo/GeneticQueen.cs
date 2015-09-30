@@ -39,6 +39,7 @@ namespace NReinas.Algoritmo
             ProbabilidadDeMutar = 80;
             Listener = pListener;
         }
+
         public async Task CreateFirstGen(int N,int size)
         {
             List<int[]> poblacion = new List<int[]>();
@@ -48,6 +49,7 @@ namespace NReinas.Algoritmo
             Generaciones.Add(poblacion);
             await Listener.MostrarPoblacion(poblacion);
         }
+
         public async Task<int[]> Resolver()
         {           
             mejorTablero = await AlgoritmoGenetico(poblacionActual, 0);
@@ -83,7 +85,7 @@ namespace NReinas.Algoritmo
                         Console.WriteLine("C: " + c);
                         foreach (int val in hijo)
                             Console.Write(val + " ");
-                        //await Listener.Solucion(hijo);
+                        await Listener.Solucion(hijo);
                         return hijo;
                     }
 
@@ -99,7 +101,7 @@ namespace NReinas.Algoritmo
                         Console.WriteLine("C: " + c);
                         foreach (int val in hijo)
                             Console.Write(val + " ");
-                        //await Listener.Solucion(hijo);
+                        await Listener.Solucion(hijo);
                         return hijo;
                     }
                 }
