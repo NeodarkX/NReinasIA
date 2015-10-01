@@ -24,6 +24,7 @@ namespace NReinas.Estructuras
         public Board Padre { get; }
         public Board Madre { get; }
         public Board AntesDeMutar { get; set; }
+        public int Fitnes { get; set; }
 
     }
 }

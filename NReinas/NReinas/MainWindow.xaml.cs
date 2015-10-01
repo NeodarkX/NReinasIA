@@ -240,13 +240,13 @@ namespace NReinas
 
                     BoardUI padre = new BoardUI(board.Padre, BOARD_SIZE / 2 - BOARD_MARGIN, this);
                     BoardUI madre = new BoardUI(board.Madre, BOARD_SIZE / 2 - BOARD_MARGIN, this);
-                    Grid.SetRow(padre, 1);      Grid.SetRow(madre, 1);
+                    Grid.SetRow(padre, 2);      Grid.SetRow(madre, 2);
                     Grid.SetColumn(padre, 0);   Grid.SetColumn(madre, 2);
 
                     PadreArea.Children.Add(padre);
                     MadreArea.Children.Add(madre);
                 }
-
+                Fitness.Content = "Fitness: " + board.Fitnes;
                 AntesArea.Children.Clear();
                 ActualArea.Children.Clear();
                 if (board.AntesDeMutar == null)

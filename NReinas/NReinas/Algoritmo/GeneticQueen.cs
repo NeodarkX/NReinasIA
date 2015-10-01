@@ -80,6 +80,7 @@ namespace NReinas.Algoritmo
                     //await Listener.AgregandoANuevaPoblacion(hijo);
 
                     int fit = Fitness(hijo);
+                    hijo.Fitnes = fit;
                     if (fit == 0)
                     {
                         Console.WriteLine("C: " + c);
@@ -96,6 +97,7 @@ namespace NReinas.Algoritmo
                         //await Listener.Mutando(hijo);
                     }
                     fit = Fitness(hijo);
+                    hijo.Fitnes = fit;
                     if (fit == 0)
                     {
                         Console.WriteLine("C: " + c);

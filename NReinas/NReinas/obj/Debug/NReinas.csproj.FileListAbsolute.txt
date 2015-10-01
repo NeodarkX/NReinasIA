@@ -25,3 +25,17 @@ C:\Users\Harold\Documents\Ciclo20152\Inteligencia Artificial\NReinasIA\NReinas\N
 C:\Users\Harold\Documents\Ciclo20152\Inteligencia Artificial\NReinasIA\NReinas\NReinas\obj\Debug\NReinas.pdb
 C:\Users\Harold\Documents\Ciclo20152\Inteligencia Artificial\NReinasIA\NReinas\NReinas\obj\Debug\NReinas.csprojResolveAssemblyReference.cache
 C:\Users\Harold\Documents\Ciclo20152\Inteligencia Artificial\NReinasIA\NReinas\NReinas\obj\Debug\Dictionary1.baml
+C:\Bruno_UPC\Ciclo 2015-02\Inteligencia artificial\NReinasIA\NReinas\NReinas\bin\Debug\NReinas.exe.config
+C:\Bruno_UPC\Ciclo 2015-02\Inteligencia artificial\NReinasIA\NReinas\NReinas\bin\Debug\NReinas.exe
+C:\Bruno_UPC\Ciclo 2015-02\Inteligencia artificial\NReinasIA\NReinas\NReinas\bin\Debug\NReinas.pdb
+C:\Bruno_UPC\Ciclo 2015-02\Inteligencia artificial\NReinasIA\NReinas\NReinas\obj\Debug\Dictionary1.baml
+C:\Bruno_UPC\Ciclo 2015-02\Inteligencia artificial\NReinasIA\NReinas\NReinas\obj\Debug\MainWindow.baml
+C:\Bruno_UPC\Ciclo 2015-02\Inteligencia artificial\NReinasIA\NReinas\NReinas\obj\Debug\MainWindow.g.cs
+C:\Bruno_UPC\Ciclo 2015-02\Inteligencia artificial\NReinasIA\NReinas\NReinas\obj\Debug\App.g.cs
+C:\Bruno_UPC\Ciclo 2015-02\Inteligencia artificial\NReinasIA\NReinas\NReinas\obj\Debug\NReinas_MarkupCompile.cache
+C:\Bruno_UPC\Ciclo 2015-02\Inteligencia artificial\NReinasIA\NReinas\NReinas\obj\Debug\NReinas.g.resources
+C:\Bruno_UPC\Ciclo 2015-02\Inteligencia artificial\NReinasIA\NReinas\NReinas\obj\Debug\NReinas.Properties.Resources.resources
+C:\Bruno_UPC\Ciclo 2015-02\Inteligencia artificial\NReinasIA\NReinas\NReinas\obj\Debug\NReinas.csproj.GenerateResource.Cache
+C:\Bruno_UPC\Ciclo 2015-02\Inteligencia artificial\NReinasIA\NReinas\NReinas\obj\Debug\NReinas.exe
+C:\Bruno_UPC\Ciclo 2015-02\Inteligencia artificial\NReinasIA\NReinas\NReinas\obj\Debug\NReinas.pdb
+C:\Bruno_UPC\Ciclo 2015-02\Inteligencia artificial\NReinasIA\NReinas\NReinas\obj\Debug\NReinas.csprojResolveAssemblyReference.cache
